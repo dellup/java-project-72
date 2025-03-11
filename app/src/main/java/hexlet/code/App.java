@@ -5,10 +5,8 @@ import com.zaxxer.hikari.HikariDataSource;
 import gg.jte.ContentType;
 import gg.jte.TemplateEngine;
 import gg.jte.resolve.ResourceCodeResolver;
-import hexlet.code.model.Url;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinJte;
-
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -51,9 +49,8 @@ public class App {
         });
 
         app.get("/", ctx -> {
-           ctx.result("Hello, World");
+            ctx.result("Hello, World");
         });
-
         return app;
     }
 }
