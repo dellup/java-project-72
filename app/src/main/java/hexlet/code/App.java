@@ -1,11 +1,17 @@
 package hexlet.code;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+import hexlet.code.model.Url;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinJte;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 
 public class App {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException, IOException {
         var app = getApp();
         app.start(getPort());
     }
@@ -14,7 +20,17 @@ public class App {
         return Integer.valueOf(port);
     }
 
-    public static Javalin getApp() {
+    private static String getDatabaseUrl() {
+        return System.getenv().getOrDefault(
+                "JDBC_DATABASE_URL",
+                "jdbc:h2:mem:project");
+    }
+
+    public static Javalin getApp() throws IOException, SQLException {
+        var hikariConfig = new HikariConfig();
+        hikariConfig.setJdbcUrl(getDatabaseUrl());
+        HikariDataSource dataSource = new HikariDataSource(hikariConfig);
+
         var app = Javalin.create(config -> {
             config.bundledPlugins.enableDevLogging();
             config.fileRenderer(new JavalinJte());
