@@ -1,11 +1,15 @@
-FROM gradle:7.4.0-jdk17
+FROM eclipse-temurin:21-jdk
 
 WORKDIR /app
 
-COPY /app .
+RUN ./gradlew --no-daemon dependencies
 
-RUN chmod +x gradlew
+COPY src src
+COPY config config
 
-RUN ./gradlew run
+RUN ./gradlew --no-daemon build
 
-CMD ./build/install/app/bin/app
+ENV JAVA_OPTS "-Xmx512M -Xms512M"
+EXPOSE 7060
+
+CMD java -jar build/libs/HexletJavalin-1.0-SNAPSHOT-all.jar

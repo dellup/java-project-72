@@ -7,7 +7,6 @@ import io.javalin.rendering.template.JavalinJte;
 public class App {
     public static void main(String[] args) {
         var app = getApp();
-
         app.start(getPort());
     }
     private static int getPort() {
