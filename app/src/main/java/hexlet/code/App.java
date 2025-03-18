@@ -5,7 +5,11 @@ import com.zaxxer.hikari.HikariDataSource;
 import gg.jte.ContentType;
 import gg.jte.TemplateEngine;
 import gg.jte.resolve.ResourceCodeResolver;
+import hexlet.code.controllers.MainPageController;
+import hexlet.code.controllers.UrlController;
+import hexlet.code.controllers.UrlsController;
 import hexlet.code.repository.BaseRepository;
+import hexlet.code.util.NamedRoutes;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinJte;
 
@@ -70,9 +74,10 @@ public class App {
             ctx.contentType("text/html; charset=utf-8");
         });
 
-        app.get("/", ctx -> {
-            ctx.result("Hello, World");
-        });
+        app.get(NamedRoutes.rootPath(), MainPageController::index);
+        app.post(NamedRoutes.urlsPath(), UrlsController::createUrl);
+        app.get(NamedRoutes.urlsPath(), UrlsController::showUrls);
+        app.get(NamedRoutes.urlPath("{id}"), UrlController::index);
         return app;
     }
 }
