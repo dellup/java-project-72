@@ -7,6 +7,9 @@ dev:
 setup:
 	cd app && chmod +x gradlew && gradle wrapper --gradle-version 8.12
 
+report:
+	cd app && chmod +x gradlew && ./gradlew jacocoTestReport
+
 clean:
 	cd app && chmod +x gradlew && ./gradlew clean
 
