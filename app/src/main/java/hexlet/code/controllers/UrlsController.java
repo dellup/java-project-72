@@ -18,9 +18,16 @@ public class UrlsController {
     public static void createUrl(Context ctx) throws SQLException {
         var input = ctx.formParam("url");
 
+        if (input == null || input.trim().isEmpty()) {
+            ctx.sessionAttribute("flash", "Некорректный URL");
+            ctx.sessionAttribute("flashType", "danger");
+            ctx.redirect(NamedRoutes.rootPath());
+            return;
+        }
+
         URL parsedUrl;
         try {
-            parsedUrl = new URI(input).toURL();
+            parsedUrl = new URI(input.trim()).toURL();
         } catch (URISyntaxException | MalformedURLException | NullPointerException | IllegalArgumentException e) {
             ctx.sessionAttribute("flash", "Некорректный URL");
             ctx.sessionAttribute("flashType", "danger");
@@ -53,8 +60,10 @@ public class UrlsController {
     public static void showUrls(Context ctx) throws SQLException {
         List<Url> urls = UrlRepository.getEntities();
         UrlsPage page = new UrlsPage(urls);
-        page.setFlash(ctx.consumeSessionAttribute("flash"));
-        page.setFlashType(ctx.consumeSessionAttribute("flashType"));
+        page.setFlash(ctx.sessionAttribute("flash"));
+        page.setFlashType(ctx.sessionAttribute("flashType"));
+        ctx.sessionAttribute("flash", null);
+        ctx.sessionAttribute("flashType", null);
         ctx.render("urls/index.jte", model("page", page));
     }
 }

@@ -1,6 +1,7 @@
 plugins {
     application
     checkstyle
+    jacoco
     id("io.freefair.lombok") version "8.6"
     id("java")
     id("com.github.ben-manes.versions") version "0.51.0"
@@ -31,11 +32,28 @@ dependencies {
     implementation("io.javalin:javalin-rendering:6.1.6")
     implementation("org.postgresql:postgresql:42.7.3")
 
+    testImplementation("org.junit.jupiter:junit-jupiter:5.9.2") // JUnit 5
+    testImplementation("org.mockito:mockito-core:5.3.1") // Mockito
+    testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
     testImplementation("org.assertj:assertj-core:3.26.3")
     testImplementation(platform("org.junit:junit-bom:5.11.2"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
 
+jacoco {
+    toolVersion = "0.8.10" // Укажите актуальную версию JaCoCo
+}
+
 tasks.test {
     useJUnitPlatform()
+    finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test) // tests are required to run before generating the report
+    reports {
+        xml.required.set(true) // Генерация отчета в формате XML
+        csv.required.set(false) // Отключение отчета в формате CSV
+        html.required.set(true) // Генерация отчета в формате HTML
+    }
 }

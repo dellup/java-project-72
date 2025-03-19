@@ -9,7 +9,7 @@ public final class JteindexGenerated {
 		jteOutput.writeContent("\r\n");
 		gg.jte.generated.ondemand.layout.JtepageGenerated.render(jteOutput, jteHtmlInterceptor, page, new gg.jte.html.HtmlContent() {
 			public void writeTo(gg.jte.html.HtmlTemplateOutput jteOutput) {
-				jteOutput.writeContent("\r\n    <main class=\"flex-grow-1\">\r\n        <section>\r\n            <table class=\"table table-bordered\">\r\n                <thead>\r\n                <tr>\r\n                    <th scope=\"col\">ID</th>\r\n                    <th scope=\"col\">Имя</th>\r\n                    <th scope=\"col\">Последняя проверка</th>\r\n                    <th scope=\"col\">Код ответа</th>\r\n                </tr>\r\n                </thead>\r\n                <tbody>\r\n                ");
+				jteOutput.writeContent("\r\n    <main class=\"flex-grow-1\">\r\n        <section>\r\n            <table class=\"table table-bordered table-hover mt-3\">\r\n                <thead>\r\n                <tr>\r\n                    <th scope=\"col-1\">ID</th>\r\n                    <th>Имя</th>\r\n                    <th scope=\"col-2\">Последняя проверка</th>\r\n                    <th scope=\"col-1\">Код ответа</th>\r\n                </tr>\r\n                </thead>\r\n                <tbody>\r\n                ");
 				for (int i = 0; i < page.getUrls().size(); i++) {
 					jteOutput.writeContent("\r\n                    <tr>\r\n                        <th scope=\"row\">");
 					jteOutput.setContext("th", null);
@@ -26,7 +26,7 @@ public final class JteindexGenerated {
 					jteOutput.writeContent(">");
 					jteOutput.setContext("a", null);
 					jteOutput.writeUserContent(page.getUrls().get(i).getName());
-					jteOutput.writeContent("</a></td>\r\n                        <td>Otto</td>\r\n                        <td>@mdo</td>\r\n                    </tr>\r\n                ");
+					jteOutput.writeContent("</a></td>\r\n                        <td></td>\r\n                        <td></td>\r\n                    </tr>\r\n                ");
 				}
 				jteOutput.writeContent("\r\n                </tbody>\r\n            </table>\r\n\r\n        </section>\r\n    </main>\r\n");
 			}
