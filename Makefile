@@ -1,28 +1,28 @@
 check-deps:
-	cd app && ./gradlew dependencyUpdates -Drevision=release
+	cd app && chmod +x gradlew && ./gradlew dependencyUpdates -Drevision=release
 
 dev:
-	cd app && ./gradlew run
+	cd app && chmod +x gradlew && ./gradlew run
 
 setup:
-	cd app && gradle wrapper --gradle-version 8.12
+	cd app && chmod +x gradlew && gradle wrapper --gradle-version 8.12
 
 clean:
-	cd app && ./gradlew clean
+	cd app && chmod +x gradlew && ./gradlew clean
 
 build:
-	cd app && ./gradlew clean build
+	cd app && chmod +x gradlew && ./gradlew clean build
 
 start: dev
 
 install:
-	cd app && ./gradlew installDist
+	cd app && chmod +x gradlew && ./gradlew installDist
 
 lint:
-	cd app && ./gradlew checkstyleMain checkstyleTest
+	cd app && chmod +x gradlew && ./gradlew checkstyleMain checkstyleTest
 
 test:
-	cd app && ./gradlew test
+	cd app && chmod +x gradlew && ./gradlew test
 
 image-build:
 	docker build -t hexletcomponents/java-javalin-example:latest .
