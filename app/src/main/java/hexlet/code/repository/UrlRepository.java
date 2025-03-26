@@ -12,11 +12,12 @@ import java.util.Optional;
 
 public class UrlRepository extends BaseRepository {
     public static void save(Url url) throws SQLException {
-        var sql = "INSERT INTO urls(name) VALUES(?)";
+        var sql = "INSERT INTO urls(name, created_at) VALUES(?, ?)";
         var datetime = Timestamp.valueOf(LocalDateTime.now());
         try (var conn = dataSource.getConnection();
             var preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, url.getName());
+            preparedStatement.setTimestamp(2, datetime);
             preparedStatement.executeUpdate();
 
             var generatedKeys = preparedStatement.getGeneratedKeys();
@@ -49,7 +50,6 @@ public class UrlRepository extends BaseRepository {
 
     public static Optional<Url> findById(int id) throws SQLException {
         var sql = "SELECT * FROM urls WHERE id = ?";
-        var datetime = Timestamp.valueOf(LocalDateTime.now());
         try (var conn = dataSource.getConnection();
             var preparedStatement = conn.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
@@ -58,7 +58,7 @@ public class UrlRepository extends BaseRepository {
                 Url url = new Url();
                 url.setId(result.getInt(1));
                 url.setName(result.getString(2));
-                url.setCreatedAt(datetime);
+                url.setCreatedAt(result.getTimestamp(3));
                 return Optional.of(url);
             }
             return Optional.empty();

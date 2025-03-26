@@ -26,11 +26,15 @@ dependencies {
     implementation("com.fasterxml.jackson.core:jackson-databind:2.17.0")
     implementation("org.apache.commons:commons-text:1.11.0")
     implementation("gg.jte:jte:3.1.16")
+    implementation("gg.jte:jte-kotlin:3.1.16") // Если проект на Kotlin
     implementation("org.slf4j:slf4j-simple:2.0.16")
     implementation("io.javalin:javalin:6.1.3")
     implementation("io.javalin:javalin-bundle:6.1.3")
     implementation("io.javalin:javalin-rendering:6.1.6")
     implementation("org.postgresql:postgresql:42.7.3")
+    implementation(platform("com.konghq:unirest-java-bom:4.4.5"))
+    implementation("com.konghq:unirest-java-core")
+    implementation("com.konghq:unirest-modules-jackson")
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.2") // JUnit 5
     testImplementation("org.mockito:mockito-core:5.3.1") // Mockito
@@ -38,6 +42,8 @@ dependencies {
     testImplementation("org.assertj:assertj-core:3.26.3")
     testImplementation(platform("org.junit:junit-bom:5.11.2"))
     testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
+    implementation("org.jsoup:jsoup:1.17.2")
 }
 
 jacoco {

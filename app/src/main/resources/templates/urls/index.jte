@@ -7,7 +7,7 @@ page = page,
 content = @`
     <main class="flex-grow-1">
         <section>
-            <table class="table table-bordered table-hover mt-3">
+            <table class="table table-bordered table-hover mt-3 p-3">
                 <thead>
                 <tr>
                     <th scope="col-1">ID</th>
@@ -21,8 +21,12 @@ content = @`
                     <tr>
                         <th scope="row">${page.getUrls().get(i).getId()}</th>
                         <td><a href="${NamedRoutes.urlPath(page.getUrls().get(i).getId())}">${page.getUrls().get(i).getName()}</a></td>
-                        <td></td>
-                        <td></td>
+                        <td>@if(!page.getLatestChecks().isEmpty() && page.getLatestChecks().get(page.getUrls().get(i).getId()) != null)
+                                ${page.getLatestChecks().get(page.getUrls().get(i).getId()).getCreatedAt().toString()}
+                            @endif</td>
+                        <td>@if(!page.getLatestChecks().isEmpty() && page.getLatestChecks().get(page.getUrls().get(i).getId()) != null)
+                                ${page.getLatestChecks().get(page.getUrls().get(i).getId()).getStatusCode()}
+                            @endif</td>
                     </tr>
                 @endfor
                 </tbody>

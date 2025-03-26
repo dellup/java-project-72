@@ -2,6 +2,8 @@ package hexlet.code.controllers;
 
 import hexlet.code.dto.UrlsPage;
 import hexlet.code.model.Url;
+import hexlet.code.model.UrlCheck;
+import hexlet.code.repository.UrlCheckRepository;
 import hexlet.code.util.NamedRoutes;
 import io.javalin.http.Context;
 import hexlet.code.repository.UrlRepository;
@@ -10,7 +12,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static io.javalin.rendering.template.TemplateUtil.model;
 
@@ -59,7 +63,18 @@ public class UrlsController {
 
     public static void showUrls(Context ctx) throws SQLException {
         List<Url> urls = UrlRepository.getEntities();
-        UrlsPage page = new UrlsPage(urls);
+        Map<Integer, UrlCheck> latestChecks = new HashMap<>();
+        urls.forEach(o -> {
+            try {
+                if (!UrlCheckRepository.getByUrlId(o.getId()).isEmpty()) {
+                    var a = UrlCheckRepository.getByUrlId(o.getId());
+                    latestChecks.put(o.getId(), UrlCheckRepository.getByUrlId(o.getId()).getLast());
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        UrlsPage page = new UrlsPage(urls, latestChecks);
         page.setFlash(ctx.sessionAttribute("flash"));
         page.setFlashType(ctx.sessionAttribute("flashType"));
         ctx.sessionAttribute("flash", null);
