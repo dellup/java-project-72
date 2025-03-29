@@ -5,7 +5,7 @@ dev:
 	cd app && chmod +x gradlew && ./gradlew run
 
 setup:
-	cd app && chmod +x gradlew && ./gradlew wrapper --gradle-version 8.12
+	cd code/app && chmod +x gradlew && ./gradlew wrapper --gradle-version 8.12
 
 report:
 	cd app && chmod +x gradlew && ./gradlew jacocoTestReport
