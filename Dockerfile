@@ -1,10 +1,17 @@
-FROM gradle:8.7.0-jdk21
+FROM gradle:8.7.0-jdk21 AS builder
 
 WORKDIR /app
 
-COPY /app .
+COPY . .
 
-RUN chmod +x gradlew && \
-    ./gradlew installDist
+RUN chmod +x gradlew
 
-CMD ./build/install/app/bin/app
+RUN ./gradlew installDist
+
+FROM eclipse-temurin:21-jre-jammy
+
+WORKDIR /app
+
+COPY --from=builder /app/build/install/app /app
+
+CMD ["./bin/app"]
