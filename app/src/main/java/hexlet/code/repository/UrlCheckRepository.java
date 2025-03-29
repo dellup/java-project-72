@@ -14,7 +14,8 @@ import java.util.HashMap;
 
 public class UrlCheckRepository extends BaseRepository {
     public static void save(UrlCheck urlCheck) throws SQLException {
-        var sql = "INSERT INTO url_checks (url_id, status_code, h1, title, description) VALUES(?, ?, ?, ?, ?)";
+        var sql = "INSERT INTO url_checks (url_id, status_code, h1, title, description, created_at) "
+            + "VALUES(?, ?, ?, ?, ?, ?)";
         var datetime = Timestamp.valueOf(LocalDateTime.now());
 
         try (var conn = dataSource.getConnection();
@@ -24,6 +25,7 @@ public class UrlCheckRepository extends BaseRepository {
             stmt.setString(3, urlCheck.getH1());
             stmt.setString(4, urlCheck.getTitle());
             stmt.setString(5, urlCheck.getDescription());
+            stmt.setTimestamp(6, datetime);
             stmt.executeUpdate();
 
             var generatedKeys = stmt.getGeneratedKeys();
